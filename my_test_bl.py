@@ -8,17 +8,23 @@ Created on Fri Sep 27 10:32:06 2024
 
 import numpy as np
 import sys, os
+from bluesky.plan_stubs import mv
+# os.environ["EPICS_CA_ADDR_LIST"] = "192.168.152.15"
+os.environ["EPICS_CA_ADDR_LIST"] = "127.0.0.1"
+os.environ["EPICS_CA_AUTO_ADDR_LIST"] = "NO"
 # import matplotlib as mpl
 # mpl.use("Agg")
 from matplotlib import pyplot as plt
-sys.path.append('/home/rchernikov/github/blop/src')
+# sys.path.append('/home/rchernikov/github/blop/src')
 import blop
 # sys.path.append(os.path.join('..', '..', '..')) 
 from blop.utils import prepare_re_env as pre
-from blop.sim import Beamline
+# from blop.sim import xrt_beamline as Beamline
+from xrt_beamline import Beamline, BeamlineEpics
+
 from blop import DOF, Objective, Agent
 from blop.digestion import beam_stats_digestion
-
+import time
 
 
 plt.ion()
@@ -41,7 +47,10 @@ R2, dR2 = 20000, 10000
 
 bec.disable_plots()
 
-beamline = Beamline(name="bl")
+# beamline = Beamline(name="bl")
+
+beamline = BeamlineEpics('BL', name="bl") 
+time.sleep(1)
 
 dofs = [
     # DOF(description="KBV downstream",
@@ -84,10 +93,12 @@ objectives = [
     Objective(name="bl_det_wid_x",
               target="min",
               transform="log",
+              # trust_domain=(0, 1e12),
               latent_groups=[("bl_kbh_dsh", "bl_kbv_dsv")]),
     Objective(name="bl_det_wid_y",
               target="min",
               transform="log",
+              # trust_domain=(0, 1e12),
               latent_groups=[("bl_kbh_dsh", "bl_kbv_dsv")]),
 
 
@@ -109,7 +120,7 @@ agent = Agent(
     objectives=objectives,
     detectors=[beamline.det],
     digestion=beam_stats_digestion,
-    digestion_kwargs={"image_key": "bl_det_image"},
+    digestion_kwargs={"image_key": "bl_det_image", "image_shape": (300, 400)},
     verbose=True,
     db=db,
     tolerate_acquisition_errors=False,
@@ -117,10 +128,22 @@ agent = Agent(
     train_every=3,
 )
 
-(uid,) = RE(agent.learn("qr", n=30))
+# RE(agent.learn("qr", n=16))
+RE(agent.learn("qr", n=160))
+# RE(agent.learn("qr", n=4))
+# RE(agent.learn("qei", n=4, iterations=4))
+RE(agent.learn("qei", n=16, iterations=4))
 
-RE(agent.learn("qei", n=4, iterations=5))
-plt.imshow(agent.best.bl_det_image)
+# (uid,) = RE(agent.learn("qr", n=3))
+# print("done")
+
+# RE(agent.learn("qei", n=4, iterations=5))
+best_image = agent.best.bl_det_image
+RE(agent.go_to_best())
+RE(mv(beamline.det.acquire, 1))
+if len(best_image.shape) < 2:
+    best_image = np.reshape(best_image, (300, 400))
+plt.imshow(best_image)
 
 # agent.plot_objectives(axes=(2, 3))
 agent.plot_objectives(axes=(0, 1))

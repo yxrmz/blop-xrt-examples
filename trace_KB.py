@@ -14,8 +14,15 @@ Created with xrtQook
 import numpy as np
 import sys, os
 # sys.path.append(r"/home/rchernikov/anaconda3/envs/blop312/lib/python3.12/site-packages")
-os.environ['LD_PRELOAD']='/usr/lib/x86_64-linux-gnu/libstdc++.so.6'
+# os.environ['LD_PRELOAD']='/usr/lib/x86_64-linux-gnu/libstdc++.so.6'
+# os.environ['LD_PRELOAD']='/usr/lib64/libstdc++.so.6'
+os.environ['QT_QPA_PLATFORM'] = 'xcb'
+# os.environ['PYOPENGL_PLATFORM'] = 'glx'
+# os.environ['SDL_VIDEO_X11_FORCE_EGL'] = '1'
+sys.path.append("/home/rcherniko/github/xrt")
+# print("0")
 import xrt.backends.raycing.sources as rsources
+# print("")
 import xrt.backends.raycing.screens as rscreens
 import xrt.backends.raycing.materials as rmats
 import xrt.backends.raycing.oes as roes
@@ -24,6 +31,8 @@ import xrt.backends.raycing.run as rrun
 import xrt.backends.raycing as raycing
 import xrt.plotter as xrtplot
 import xrt.runner as xrtrun
+import time
+# print("00")
 
 limits=[[-0.6, 0.6], [-0.45, 0.45]]
 
@@ -59,6 +68,8 @@ def build_beamline():
         bl=beamLine,
         center=[0, 0, 0],
         nrays=25000,
+        energies=(9000, 100),
+        distE='normal',
         dx=0.2,
         dz=0.1,
         dxprime=0.00015)
@@ -72,8 +83,8 @@ def build_beamline():
         center=[0, 10000, 0],
         pitch=r"5deg",
         limPhysX=[-20.0, 20.0],
-        limPhysY=[-50.0, 50.0],
-        # R=35000,
+        limPhysY=[-150.0, 150.0],
+        # R=55000,
         R=38245,
         # R=[10000, 2000],
         r=100000000.0)
@@ -87,7 +98,7 @@ def build_beamline():
         positionRoll=r"90deg",
         rotationSequence=r"RyRxRz",
         limPhysX=[-20, 20],
-        limPhysY=[-50, 50],
+        limPhysY=[-150, 150],
         # R=25000,
         R=21035,
         # R=[11000, 1000],
@@ -104,6 +115,7 @@ def build_beamline():
 
 
 def run_process(beamLine):
+    time0 = time.time()
     geometricSource01beamGlobal01 = beamLine.geometricSource01.shine()
 
     toroidMirror01beamGlobal01, toroidMirror01beamLocal01 = beamLine.toroidMirror01.reflect(
@@ -122,6 +134,7 @@ def run_process(beamLine):
         'toroidMirror02beamGlobal01': toroidMirror02beamGlobal01,
         'toroidMirror02beamLocal01': toroidMirror02beamLocal01,
         'screen01beamLocal01': screen01beamLocal01}
+    print("Tracing takes {:.3f}ms".format(1000*(time.time()-time0)))
     beamLine.prepare_flow()
     return outDict
 
@@ -148,8 +161,11 @@ def define_plots():
 
 
 def main():
+    # print("1")
     beamLine = build_beamline()
-    # beamLine.glow()
+    # print("2")
+    beamLine.glow()
+    # print("3")
     E0 = list(beamLine.geometricSource01.energies)[0]
     beamLine.alignE=E0
     plots = define_plots()
