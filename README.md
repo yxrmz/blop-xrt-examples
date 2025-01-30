@@ -1,7 +1,7 @@
 # blop-xrt-examples
 
 xrt-blop interoperability tests
-1. Fix the path to _xrt_ in `xrt_beamline.py` under ```os.path.append("PATH_TO_XRT")```. The test works only with `xrt/new_glow` branch (until merged with `master`)
+1. Fix the path to _xrt_ in `xrt_beamline.py` under ```os.path.append("PATH_TO_XRT")```. The test works only with [`xrt/new_glow`](https://github.com/kklmn/xrt/tree/new_glow) branch (until merged with `master`)
 2. We use [pythonSoftIOC](https://github.com/DiamondLightSource/pythonSoftIOC) to spawn PVs dynamically, so
    `pip install pythonsoftioc, cothread`
 3. Navigate to `xrt/examples/withRaycing/_QookBeamlines` and run `xrt_beamline_epics.py` - this will spawn a virtual IOC.
