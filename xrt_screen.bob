@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-01-30 15:28:53 by rcherniko-->
+<display version="2.0.0">
+  <name>Display</name>
+  <widget type="image" version="2.0.0">
+    <name>Image</name>
+    <pv_name>BL:Screen1:Array</pv_name>
+    <x>60</x>
+    <y>260</y>
+    <width>500</width>
+    <height>330</height>
+    <color_map>
+      <name>JET</name>
+    </color_map>
+    <x_axis>
+      <visible>true</visible>
+      <title>X</title>
+      <minimum>0.0</minimum>
+      <maximum>400.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </x_axis>
+    <y_axis>
+      <visible>true</visible>
+      <title>Y</title>
+      <minimum>0.0</minimum>
+      <maximum>300.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </y_axis>
+    <data_width>400</data_width>
+    <data_height>300</data_height>
+    <interpolation>0</interpolation>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button</name>
+    <actions>
+      <action type="write_pv">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <description>WritePV</description>
+      </action>
+    </actions>
+    <pv_name>BL:Screen1:Acquire</pv_name>
+    <text>Acquire</text>
+    <x>60</x>
+    <y>90</y>
+    <width>170</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="20.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <text>N rays</text>
+    <x>260</x>
+    <y>90</y>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="20.0">
+      </font>
+    </font>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry</name>
+    <pv_name>BL:GS01:nrays</pv_name>
+    <x>370</x>
+    <y>90</y>
+    <width>140</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="20.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry_1</name>
+    <pv_name>BL:TM_HOR:R</pv_name>
+    <x>370</x>
+    <y>140</y>
+    <width>190</width>
+    <height>40</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_1</name>
+    <pv_name>BL:TM_HOR:R</pv_name>
+    <x>580</x>
+    <y>140</y>
+    <width>170</width>
+    <height>40</height>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <text>MIRROR_HOR R</text>
+    <x>230</x>
+    <y>140</y>
+    <width>130</width>
+    <height>40</height>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>BL:Screen1:Acquire</pv_name>
+    <x>60</x>
+    <y>140</y>
+    <width>50</width>
+    <height>40</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <text>MIRROR_VERT R</text>
+    <x>230</x>
+    <y>200</y>
+    <width>130</width>
+    <height>40</height>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry_2</name>
+    <pv_name>BL:TM_VERT:R</pv_name>
+    <x>370</x>
+    <y>200</y>
+    <width>190</width>
+    <height>40</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_2</name>
+    <pv_name>BL:TM_VERT:R</pv_name>
+    <x>580</x>
+    <y>200</y>
+    <width>170</width>
+    <height>40</height>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+</display>
