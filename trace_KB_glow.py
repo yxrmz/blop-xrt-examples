@@ -13,8 +13,8 @@ Created with xrtQook
 
 import numpy as np
 import sys, os
-#os.environ['QT_QPA_PLATFORM'] = 'xcb'
-sys.path.append(r"c:/github/xrt")
+#os.environ['QT_QPA_PLATFORM'] = 'xcb'  # Might be useful in Wayland
+#sys.path.append(r"c:/github/xrt")
 #sys.path.append("/home/rcherniko/github/xrt")
 import xrt.backends.raycing.sources as rsources
 import xrt.backends.raycing.screens as rscreens
