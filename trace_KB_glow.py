@@ -130,7 +130,9 @@ def define_plots():
 
 def main():
     beamLine = build_beamline()
-    beamLine.glow(v2=True, epicsPrefix='TST')
+    beamLine.glow(v2=True,
+                  #epicsPrefix='TST'
+                 )
 
 
     E0 = list(beamLine.geometricSource01.energies)[0]
